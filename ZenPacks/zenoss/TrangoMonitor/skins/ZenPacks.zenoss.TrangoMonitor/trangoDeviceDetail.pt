@@ -1,0 +1,141 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<!-- BEGIN: Access Point Details -->
+<tal:block tal:define="tabletitle string:Access Point">
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+    <tr>
+        <td class="tableheader" align="left">Hardware Version</td>
+        <td class="tablevalues" tal:content="here/sysHW"/>
+        <td class="tableheader" align="left">Active Channel</td>
+        <td class="tablevalues" tal:content="here/rfActiveChannelString"/>
+    </tr><tr>
+        <td class="tableheader" align="left">Main Firmware Version</td>
+        <td class="tablevalues" tal:content="here/sysFW"/>
+        <td class="tableheader" align="left">Active Polarization</td>
+        <td class="tablevalues" tal:content="here/rfActivePolarization"/>
+    </tr><tr>
+        <td class="tableheader" align="left">FPGA Firmware Version</td>
+        <td class="tablevalues" colspan="3" tal:content="here/sysFPGA"/>
+    </tr><tr>
+        <td class="tableheader" align="left">Firmware Checksum</td>
+        <td class="tablevalues" tal:content="here/sysChecksum"/>
+        <td class="tableheader" align="left">ISM Power Range</td>
+        <td class="tablevalues" tal:content="here/ismTxPowerRangeString"/>
+    </tr><tr>
+        <td class="tableheader" align="left">Device ID</td>
+        <td class="tablevalues" tal:content="here/sysDeviceId"/>
+        <td class="tableheader" align="left">ISM Transmit Power</td>
+        <td class="tablevalues" tal:content="here/ismTxPowerString"/>
+    </tr><tr>
+        <td class="tableheader" align="left">Base ID</td>
+        <td class="tablevalues" tal:content="here/sysBaseId"/>
+        <td class="tableheader" align="left">ISM Service Radius</td>
+        <td class="tablevalues" tal:content="here/ismServiceRadius"/>
+    </tr><tr>
+        <td class="tableheader" align="left">Access Point ID</td>
+        <td class="tablevalues" tal:content="here/sysAPId"/>
+        <td class="tableheader" align="left">ISM Sensitivity / Target RSSI</td>
+        <td class="tablevalues" tal:content="here/ismRxString"/>
+    </tr><tr>
+        <td class="tableheader" align="left">Radio Mode</td>
+        <td class="tablevalues" colspan="3" tal:content="
+            python: here.sysDefOpMode + ' / ' + here.sysCurOpModeString()"/>
+    </tr><tr>
+        <td class="tableheader" align="left">Broadcast &amp; Multicast</td>
+        <td class="tablevalues" tal:content="here/sysBlockBroadcastMulticast"/>
+        <td class="tableheader" align="left">UNII Transmit Power Range</td>
+        <td class="tablevalues" tal:content="here/uniiTxPowerRangeString"/>
+    </tr><tr>
+        <td class="tableheader" align="left">SU to SU Communication</td>
+        <td class="tablevalues" tal:content="here/sysSUtoSU"/>
+        <td class="tableheader" align="left">UNII Transmit Power</td>
+        <td class="tablevalues" tal:content="here/uniiTxPowerString"/>
+    </tr><tr>
+        <td class="tableheader" align="left">TFTPD / HTTPD</td>
+        <td class="tablevalues" tal:content="
+            python: here.sysTFTPD + ' / ' + here.sysHTTPD"/>
+        <td class="tableheader" align="left">UNII Service Radius</td>
+        <td class="tablevalues" tal:content="here/uniiServiceRadius"/>
+    </tr><tr>
+        <td class="tableheader" align="left">Maximum Information Rate</td>
+        <td class="tablevalues" tal:content="here/sysMIRThreshold"/>
+        <td class="tableheader" align="left">UNII Sensitivity / Target RSSI</td>
+        <td class="tablevalues" tal:content="here/uniiRxString"/>
+    </tr>
+</tal:block>
+</tal:block>
+</tal:block>
+
+<!-- BEGIN: Subscriber Units -->
+<tal:block tal:define="tableName string:subscriberUnitsList;
+    objects here/subscriberUnits/objectValuesAll;
+    tabletitle string:Subscriber Units;
+    noselectionbar python:True;
+    batch python:here.ZenTableManager.getBatch(tableName,objects,
+                                            sortedHeader='name');
+    ts python:here.ZenTableManager.getTableState(tableName);
+    menu_id string:Subscribe Units;
+    showfilterbox python:True;">
+    
+<form method="post" name="subscriberUnitsForm">
+<input type='hidden' name='tableName' tal:attributes="value tableName" />
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="filterslot">
+    <div style="position:absolute;right:200px;top:0px;">Monitored
+		<input class="navcontrol" type="checkbox"
+			name="onlyMonitored"
+			onchange="this.form.submit()"
+			value="1"
+            style="margin-top:-2px;margin-bottom:2px;"
+			tal:attributes="checked ts/onlyMonitored" />
+    </div>
+    <tal:block metal:use-macro="here/zenuimacros/macros/filterbox"/>
+</tal:block>
+
+<tal:block metal:fill-slot="zentablecontents">
+    <tr>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+            tableName,'name','Unit')" />
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+            tableName,'remarks','Remarks')" />
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+            tableName,'distance','Distance (miles)')" />
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+            tableName,'ipAddr','IP Address')" />
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+            tableName,'txPower','Transmit Power (dBm)')" />
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+            tableName,'rssiFromAP','RSSI AP/SU (dBm)')" />
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+            tableName,'association','Association')" />
+    </tr>
+    <tal:block tal:repeat="su batch">
+    <tr tal:define="odd repeat/su/odd"
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+        
+      <td class="tablevalues">
+          <a class="tablevalues" tal:content="su/name" 
+            tal:attributes="href su/getPrimaryUrlPath" />
+      </td>
+      <td class="tablevalues" tal:content="su/remarks" />
+      <td class="tablevalues" tal:content="su/distance" />
+      <td class="tablevalues" tal:content="su/ipAddr" />
+      <td class="tablevalues" tal:content="su/txPower" />
+      <td class="tablevalues" tal:content="su/rssiString" />
+      <td class="tablevalues" tal:content="su/association" />
+    </tr>
+    </tal:block>
+    <tr>
+        <td colspan="8" class="tableheader" align='center'>
+            <form metal:use-macro="here/zenTableNavigation/macros/navtoolnoform"></form>
+        </td>
+    </tr>
+</tal:block>
+</tal:block>
+</form>
+</tal:block>
+
+</tal:block>
+</tal:block>
