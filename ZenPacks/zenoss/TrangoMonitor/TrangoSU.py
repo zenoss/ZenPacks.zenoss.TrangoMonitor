@@ -112,6 +112,14 @@ class TrangoSU(DeviceComponent, ManagedEntity):
         return self.accessPoint()
     
     
+    def monitored(self):
+        if not self.association:
+            return False
+        elif not self.ipAddr or self.ipAddr == "0.0.0.0":
+            return False
+        return self.monitor
+    
+    
     def rssiFromSU(self, default=None):
         return self.cacheRRDValue('rssiFromSU', default)
     

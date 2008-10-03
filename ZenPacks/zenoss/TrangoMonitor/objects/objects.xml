@@ -594,6 +594,53 @@ ${graphPoint/id}
 Metrics from Trango subscriber units
 </property>
 <tomanycont id='datasources'>
+<object id='ping' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+icmp
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+2
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+check_ping -H ${here/ipAddr} -w 9999,100% -c 9999,100% | sed -e 's/ - Packet loss/|loss/;s/%,//;s/00%//;s/ms//;s/ = /=/g'
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='RTA' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmax" mode="w" >
+100
+</property>
+</object>
+<object id='loss' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
 <object id='rfInOctets' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
 <property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
 SNMP
@@ -854,6 +901,89 @@ True
 </object>
 </tomanycont>
 <tomanycont id='graphDefs'>
+<object id='Latency and Loss' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+ms / %
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='RTA' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%7.2lf
+</property>
+<property type="string" id="legend" mode="w" >
+Latency
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+ping_RTA
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='loss' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%6.2lf%%
+</property>
+<property type="string" id="legend" mode="w" >
+Packet Loss
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+ping_loss
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
 <object id='RSSI' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
@@ -878,6 +1008,9 @@ False
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
 True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
 </property>
 <tomanycont id='graphPoints'>
 <object id='rssiFromAP' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -963,7 +1096,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-3
+4
 </property>
 <tomanycont id='graphPoints'>
 <object id='temperature' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -1042,7 +1175,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-2
+3
 </property>
 <tomanycont id='graphPoints'>
 <object id='rfInOctets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -1134,7 +1267,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-1
+2
 </property>
 <tomanycont id='graphPoints'>
 <object id='txPower' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
