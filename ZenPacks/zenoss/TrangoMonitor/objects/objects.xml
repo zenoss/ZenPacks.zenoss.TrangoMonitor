@@ -6,7 +6,19 @@
 ZenPacks.zenoss.TrangoMonitor.TrangoDevice
 </property>
 <property visible="True" type="lines" id="zCollectorPlugins" >
-['zenoss.snmp.DeviceMap']
+['zenoss.snmp.DeviceMap', 'zenoss.snmp.NewDeviceMap']
+</property>
+<property visible="True" type="string" id="zSnmpVer" >
+v1
+</property>
+<property visible="True" type="int" id="zSnmpTries" >
+3
+</property>
+<property visible="True" type="float" id="zSnmpTimeout" >
+4.0
+</property>
+<property visible="True" type="int" id="zMaxOIDPerRequest" >
+1
 </property>
 <tomanycont id='rrdTemplates'>
 <object id='trangoApEthernet' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
@@ -20,7 +32,7 @@ No collection for Trango ethernet interfaces
 ['Device', 'TrangoM5800S']
 </property>
 <property visible="True" type="lines" id="zCollectorPlugins" >
-['zenoss.snmp.DeviceMap', 'TrangoDeviceMap', 'TrangoInterfaceMap', 'TrangoRouteMap', 'TrangoSUMap']
+['zenoss.snmp.DeviceMap', 'zenoss.snmp.NewDeviceMap', 'Trango.M5800S.TrangoDeviceMap', 'Trango.M5800S.TrangoInterfaceMap', 'Trango.M5800S.TrangoRouteMap', 'Trango.M5800S.TrangoSUMap']
 </property>
 <tomanycont id='rrdTemplates'>
 <object id='TrangoM5800S' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
@@ -938,7 +950,1294 @@ LINE
 False
 </property>
 <property type="string" id="format" mode="w" >
-%7.2lf
+%6.2lf 
+</property>
+<property type="string" id="legend" mode="w" >
+Latency
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+ping_RTA
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='loss' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%6.2lf%%
+</property>
+<property type="string" id="legend" mode="w" >
+Packet Loss
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+ping_loss
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='RSSI' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+dBm
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-128
+</property>
+<property type="int" id="maxy" mode="w" >
+127
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='rssiFromAP' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf
+</property>
+<property type="string" id="legend" mode="w" >
+From AP
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+rssiFromAP_rssiFromAP
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='rssiFromSU' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf
+</property>
+<property type="string" id="legend" mode="w" >
+From SU
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+rssiFromSU_rssiFromSU
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Temperature' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+deg. celsius
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-50
+</property>
+<property type="int" id="maxy" mode="w" >
+70
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+4
+</property>
+<tomanycont id='graphPoints'>
+<object id='temperature' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+2
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf
+</property>
+<property type="string" id="legend" mode="w" >
+Temperature
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+temperature_temperature
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='too cold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property type="string" id="threshId" mode="w" >
+too cold
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+<object id='too hot' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+too hot
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Throughput' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+bits/sec
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<tomanycont id='graphPoints'>
+<object id='rfInOctets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Inbound
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+8,*
+</property>
+<property type="string" id="dpName" mode="w" >
+rfInOctets_rfInOctets
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='rfOutOctets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+2
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Outbound
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+8,*
+</property>
+<property type="string" id="dpName" mode="w" >
+rfOutOctets_rfOutOctets
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Transmit Power' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+dBm
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-128
+</property>
+<property type="int" id="maxy" mode="w" >
+127
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<tomanycont id='graphPoints'>
+<object id='txPower' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.0lf
+</property>
+<property type="string" id="legend" mode="w" >
+Transmit Power
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+txPower_txPower
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<object id='M5830S' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property visible="True" type="lines" id="zCollectorPlugins" >
+['zenoss.snmp.DeviceMap', 'zenoss.snmp.NewDeviceMap', 'Trango.M5830S.TrangoDeviceMap', 'Trango.M5830S.TrangoInterfaceMap', 'Trango.M5830S.TrangoRouteMap', 'Trango.M5830S.TrangoSUMap']
+</property>
+<property visible="True" type="lines" id="zDeviceTemplates" >
+['Device', 'TrangoM5830S']
+</property>
+<tomanycont id='rrdTemplates'>
+<object id='TrangoM5830S' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+AP metrics from Trango M5830S
+</property>
+<tomanycont id='datasources'>
+<object id='ethInOctets' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.15.5.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='ethInOctets' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='ethOutOctets' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.15.6.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='ethOutOctets' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='rfInOctets' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.15.7.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='rfInOctets' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='rfOutOctets' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.15.8.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='rfOutOctets' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='suCount' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.1.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='suCount' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='temperature' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.16.0
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='temperature' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='too cold' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['temperature_temperature']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+-40
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Environ
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+<object id='too hot' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['temperature_temperature']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+60
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Environ
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Ethernet Throughput' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+bits/sec
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<tomanycont id='graphPoints'>
+<object id='ethInOctets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Inbound
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+8,*
+</property>
+<property type="string" id="dpName" mode="w" >
+ethInOctets_ethInOctets
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='ethOutOctets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+2
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Outbound
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+8,*
+</property>
+<property type="string" id="dpName" mode="w" >
+ethOutOctets_ethOutOctets
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='RF Throughput' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+bits/sec
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='rfInOctets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Inbound
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+8,*
+</property>
+<property type="string" id="dpName" mode="w" >
+rfInOctets_rfInOctets
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='rfOutOctets' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+2
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Outbound
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="rpn" mode="w" >
+8,*
+</property>
+<property type="string" id="dpName" mode="w" >
+rfOutOctets_rfOutOctets
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Subscriber Units' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+SUs
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<tomanycont id='graphPoints'>
+<object id='suCount' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%3.0lf
+</property>
+<property type="string" id="legend" mode="w" >
+SUs in Database
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+suCount_suCount
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='Temperature' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+deg. celsius
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-50
+</property>
+<property type="int" id="maxy" mode="w" >
+70
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<tomanycont id='graphPoints'>
+<object id='temperature' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+2
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%3.0lf
+</property>
+<property type="string" id="legend" mode="w" >
+Degrees Celsius
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+temperature_temperature
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='too cold' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property type="string" id="threshId" mode="w" >
+too cold
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+<object id='too hot' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
+<property type="string" id="threshId" mode="w" >
+too hot
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+</object>
+<object id='TrangoSU' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property type="text" id="description" mode="w" >
+Metrics from Trango subscriber units
+</property>
+<tomanycont id='datasources'>
+<object id='ping' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="component" mode="w" >
+icmp
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+2
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+check_ping -H ${here/ipAddr} -w 9999,100% -c 9999,100% | sed -e 's/ - Packet loss/|loss/;s/%,//;s/00%//;s/ms//;s/ = /=/g'
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='RTA' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmax" mode="w" >
+100
+</property>
+</object>
+<object id='loss' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='rfInOctets' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.22
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='rfInOctets' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='rfOutOctets' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.23
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='rfOutOctets' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='rssiFromAP' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.16
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='rssiFromAP' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+-128
+</property>
+<property type="string" id="rrdmax" mode="w" >
+127
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='rssiFromSU' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.15
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='rssiFromSU' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+-128
+</property>
+<property type="string" id="rrdmax" mode="w" >
+127
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='temperature' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.25
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='temperature' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='txPower' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+SNMP
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.17
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<tomanycont id='datapoints'>
+<object id='txPower' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+-128
+</property>
+<property type="string" id="rrdmax" mode="w" >
+127
+</property>
+</object>
+</tomanycont>
+</object>
+</tomanycont>
+<tomanycont id='thresholds'>
+<object id='too cold' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['temperature_temperature']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="minval" mode="w" >
+-40
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Environ
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+<object id='too hot' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="lines" id="dsnames" mode="w" >
+['temperature_temperature']
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="maxval" mode="w" >
+60
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Environ
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="int" id="escalateCount" mode="w" >
+0
+</property>
+</object>
+</tomanycont>
+<tomanycont id='graphDefs'>
+<object id='Latency and Loss' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+ms / %
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+0
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<tomanycont id='graphPoints'>
+<object id='RTA' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%6.2lf 
 </property>
 <property type="string" id="legend" mode="w" >
 Latency
@@ -1399,11 +2698,19 @@ USA
 ['1p64H8001D03100301']
 </property>
 <property type="boolean" id="isOS" mode="w" >
-True
+False
 </property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/Trango/M5800S/devices/trango-m5800s/os'/>
-</tomany>
+</object>
+<object id='8003 (1p13)' module='Products.ZenModel.SoftwareClass' class='SoftwareClass'>
+<property type="string" id="name" mode="w" >
+8003 (1p13)
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['1p13H8002D04093001']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
 </object>
 <object id='M5800S AP' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
 <property type="string" id="name" mode="w" >
@@ -1415,9 +2722,17 @@ M5800S AP
 <property type="boolean" id="isOS" mode="w" >
 False
 </property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Network/Trango/M5800S/devices/trango-m5800s/hw'/>
-</tomany>
+</object>
+<object id='M5830S AP' module='Products.ZenModel.HardwareClass' class='HardwareClass'>
+<property type="string" id="name" mode="w" >
+M5830S AP
+</property>
+<property type="lines" id="productKeys" mode="w" >
+['.1.3.6.1.4.1.5454.1.20']
+</property>
+<property type="boolean" id="isOS" mode="w" >
+False
+</property>
 </object>
 </tomanycont>
 </object>
@@ -4353,6 +5668,3011 @@ The SNMP trap that is generated when a specific SU Associated.
 </property>
 <property type="lines" id="objects" mode="w" >
 {'suID': {'nodetype': 'object', 'module': 'TRANGOM5800S-MIB'}}
+</property>
+</object>
+</tomanycont>
+</object>
+<object id='TRANGOM5830S-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
+<property type="string" id="language" mode="w" >
+SMIv1
+</property>
+<tomanycont id='nodes'>
+<object id='apipconfig' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.19
+</property>
+</object>
+<object id='apipconfigDefaultGateway' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.19.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+New Default gateway. It will be saved to
+non-volatile memory and activated in 5 secs.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apipconfigIpAddress' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.19.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+New IP address. It will be saved to
+non-volatile memory and activated in 5 secs.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apipconfigSubnet' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.19.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+New Subnet mask. It will be saved to
+non-volatile memory and activated in 5 secs.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apism' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.4
+</property>
+</object>
+<object id='apismRxThreshold' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.4.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ISM RF rx threshold (in dBm). It specifies the receiver sensitivity
+of the AP. By default, the radio's sensitivity is -82dBm.
+The higher the threshold is, the less sensitive the radio will be.
+In M5800S, the value -90 represents the rfrxthreshold is disabled.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apismServiceRadius' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.4.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ISM RF service radius (in mile). It specifies the distance of
+the furthest SU the AP will serve. Based on this information,
+the AP will determine the maximum wait time for a SU to
+response to a poll before it starts to poll the next one.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apismTargetRSSI' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.4.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ISM RF target RSSI (in dBm). It specifies the target RSSI from all SUs to
+the AP. Based on this parameter, the AP can power level each SU
+so that it receives same level of signal strength from all SUs,
+regardless far or near. Note that when you set the Target RSSI
+from SU, you need to consider AP's RF Rx Threshold value.
+The Target RSSI from SU must be 5dB higher than the RF Rx Threshold.
+When the RF Rx Threshold is disabled, the setting of the Target RSSI
+from SU shall be no less than -75dBm.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apismTxPower' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.4.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+ISM RF tx power (in dBm). It specifies the power output
+of the radio, excluding the antenna gain. Check parameters
+apismTxPowerMax and apismTxPowerMin for power setting range.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apismTxPowerMax' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.4.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The maximum ISM Tx power value can be set (in dBm).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='apismTxPowerMin' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.4.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The minimum ISM Tx power value can be set (in dBm).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='aprf' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2
+</property>
+</object>
+<object id='aprfActiveChannel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+It specifies the current channel number the radio operates on.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprfActivePolarization' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+It specifies the current polarization the radio operates on.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3
+</property>
+</object>
+<object id='aprftableChannel1' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 1 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel10' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 10 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel11' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 11 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel12' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 12 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel13' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 13 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel14' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 14 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel15' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 15 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel16' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 16 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+        Keep in mind that channel width is 20MHz, and the frequency
+        specified here is the center frequency.
+        Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel17' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.17
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 17 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel18' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 18 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel19' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.19
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 19 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel2' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 2 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel20' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.20
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 20 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel21' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.21
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 21 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel22' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.22
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 22 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel23' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.23
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 23 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel24' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.24
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 24 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel25' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.25
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 25 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel26' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.26
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 26 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel27' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.27
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 27 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel28' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.28
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 28 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel29' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.29
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 29 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel3' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 3 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel30' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.30
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 30 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel4' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 4 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel5' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 5 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel6' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 6 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel7' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 7 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel8' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 8 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aprftableChannel9' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.3.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+RF channel 9 frequency (in MHz). It allows you to create your
+own channel instead of the manufacturing defaults in the AP.
+Keep in mind that channel width is 20MHz, and the frequency
+specified here is the center frequency.
+Frequency (5260MHz - 5340MHz) is only applicable to M5830S radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apswitches' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.13
+</property>
+</object>
+<object id='apswitchesBlockBroadcastMulticast' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.13.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This switch enables or disables the blocking of Ethernet
+control packet except ICMP and ARP to reduce the amount
+of uneccessary overhead introduced to the wireless link.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apswitchesHTTPD' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.13.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+When it is turned on, then the AP is accessible for
+configuring via web browser (e.g. IE or Nescape).
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apswitchesSUtoSU' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.13.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This switch enables or disables the peer-to-peer
+feature among SUs through the AP. Before this switch
+       is turned on, all SUs that want to communicate with
+       each other have to be assigned to the same group.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apswitchesTFTPD' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.13.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This switch enables or disables the TFTP operation. When
+it is turned on, then the AP will be ready for code download.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apsystem' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1
+</property>
+</object>
+<object id='apsystemAPId' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+AP ID. Each AP in a cluster shall have unique AP ID.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apsystemActivateOpmode' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Engage AP unit to ap operation mode.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apsystemBaseId' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Cluster that the AP belongs to.
+All APs and SUs in the same cluster shall have the same Base ID.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apsystemCurOpMode' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Radio's current operation mode.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='apsystemDefOpMode' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The operation mode (ap or off) the radio is on after reboot/power cycle.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apsystemDefaultGateway' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Current Default gateway.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='apsystemDeviceId' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+MAC address.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='apsystemIpAddr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Current IP address.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='apsystemMIRThreshold' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Maximum Information Rate (in Kbps), the AP allows the
+network to utilize before enforcing CIR on each subscriber.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apsystemReadCommStr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SNMP agent read community string. It is used for authentication purpose.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apsystemReboot' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Reboot the radio.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apsystemSubnet' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Current Subnet mask.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='apsystemTemperature' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Current AP temperature value (in Celsius).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='apsystemUpdateFlashAndActivate' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.17
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Save system setting values to Flash and activate the settings.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apsystemWriteCommStr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SNMP agent write community string. It is used for authentication purpose.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aptraffic' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.15
+</property>
+</object>
+<object id='aptrafficEthInOctets' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.15.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Number of payload octets received on Ethernet port.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='aptrafficEthOutOctets' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.15.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Number of payload octets transmitted on Ethernet port.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='aptrafficEthRxAvgThroughputLog' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.15.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Average payload data throughput (in Kbits/sec)
+received on Ethernet port over the last 60 seconds.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='aptrafficEthTxAvgThroughputLog' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.15.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Average payload data throughput (in Kbits/sec)
+transmitted on Ethernet port over the last 60 seconds.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='aptrafficRfInOctets' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.15.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Number of octets of SUs payload received from RF port.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='aptrafficRfOutOctets' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.15.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Number of octets of SUs payload transmitted to RF port.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='aptrafficRfRxAvgThroughputLog' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.15.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Average payload data throughput (in Kbits/sec)
+received on RF port over the last 60 seconds.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='aptrafficRfTxAvgThroughputLog' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.15.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Average payload data throughput (in Kbits/sec)
+transmitted on RF port over the last 60 seconds.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='aptrpCommStr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.4.4.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Specific trap community string.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aptrpEnable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.4.4.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Enable a specific Trango trap event or not.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='aptrpID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.4.4.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Specific trap ID.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='aptrpIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.4.4.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trap index.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='apunii' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.5
+</property>
+</object>
+<object id='apuniiRxThreshold' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.5.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This object is only applicable to M5830S radio.
+UNII RF rx threshold (in dBm). It specifies the receiver sensitivity of the AP.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apuniiServiceRadius' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.5.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This object is only applicable to M5830S radio.
+UNII RF service radius (in mile). It specifies the distance of
+the furthest SU the AP will serve. Based on this information,
+the AP will determine the maximum wait time for a SU to
+response to a poll before it starts to poll the next one.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apuniiTargetRSSI' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.5.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This object is only applicable to M5830S radio.
+UNII RF target RSSI (in dBm). It specifies the target RSSI from all SUs to
+the AP. Based on this parameter, the AP can power level each SU so that
+it receives same level of signal strength from all SUs, regardless far
+or near. Note that when you set the Target RSSI from SU, you need to
+consider AP's RF Rx Threshold value. The Target RSSI from SU must be 5dB
+higher than the RF Rx Threshold.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apuniiTxPower' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.5.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This object is only applicable to M5830S radio.
+UNII RF tx power (in dBm). It specifies the power output
+of the radio, excluding the antenna gain. Check parameters
+apuniiTxPowerMax and apuniiTxPowerMin for power setting range.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='apuniiTxPowerMax' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.5.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This object is only applicable to M5830S radio.
+The maximum UNII Tx power value can be set (in dBm).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='apuniiTxPowerMin' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.2.5.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This object is only applicable to M5830S radio.
+The minimum UNII Tx power value can be set (in dBm).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='apversion' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.1
+</property>
+</object>
+<object id='apversionChecksum' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+AP firmware checksum.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='apversionFPGA' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+FPGA firmware version.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='apversionFW' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Main firmware version.
+Format: &lt;code version&gt;H&lt;hardware version&gt;D&lt;date&gt;.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='apversionHW' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.1.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Hardware version.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='m5830sap' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20
+</property>
+</object>
+<object id='m5830straps' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.16
+</property>
+</object>
+<object id='mibinfo' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.5
+</property>
+</object>
+<object id='mibinfoVersion' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.5.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trango MIB Version.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='su' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3
+</property>
+</object>
+<object id='suAssociation' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber unit association status.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suCIR' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+It is the Committed Information Rate (in Kbps) the AP allocates to SU.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suChecksum' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.12
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber unit firmware checksum.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suDIstance' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Distance of SU (in mile).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suEthRxAvgThroughputLog' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Average payload data throughput (in Kbits/sec) received on the
+Ethernet port over the period specified by suStatisticsSamplePeriod.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suEthTxAvgThroughputLog' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.19
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Average payload data throughput (in Kbits/sec) transmitted on the
+Ethernet port over the period specified by suStatisticsSamplePeriod.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suFPGAVer' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.11
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber unit FPGA firmware version.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suFWVer' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.10
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber unit main firmware version.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suHWVer' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber unit Hardware Version.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber unit ID. Each subscriber in a sector shall have a unique ID.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suIPAddr' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber unit IP Address.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suInfoEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Information about a specific subscriber unit retrieved by its ID number.
+</property>
+</object>
+<object id='suInfoTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table that contains subscriber unit entities.
+</property>
+</object>
+<object id='suMAC' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber unit MAC Address. Format: 00 01 DE xx xx xx.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suMIR' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+It is the Maximum Information Rate (in Kbps) the AP allocates to SU.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suPolling' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+It is service level value, regular or priority, of a SU.
+The AP will poll priority user more often, thus better
+        network latency as the result. As the network latency
+        varies based on the number of subscriber units the AP
+        serves, priority user is guaranteed that the latency is
+        NOT greater than 100ms regardless of the size of the network.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suPowerLevel' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.24
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+It is a feature that is typically found in more
+elaborate mobile systems such as cellular CDMA
+networks. Using this feature, the SU has its
+RF power output adjusted until its signal strength
+received in the AP is roughly the same.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='suPowerLvlAll' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+It is a feature that is typically found in more
+elaborate mobile systems such as cellular CDMA
+networks. Using this feature, all SUs have their
+RF power output adjusted until the signal strength
+for each SU as received in the AP is roughly the same.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='suRSSIFromAP' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.16
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber unit RSSI from AP (in dBm).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suRSSIFromSU' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.15
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber unit RSSI from SU (in dBm).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suReboot' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.26
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+AP issues reboot command to a specific subscriber unit.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='suRebootAll' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+AP broadcasts reboot command to all subscriber units.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='suRemarks' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber unit Remark.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suRfInOctets' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.22
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Number of payload octets received on the RF port.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suRfOutOctets' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.23
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Number of payload octets transmitted on the RF port.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suRfRxAvgThroughputLog' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.20
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Average payload data throughput (in Kbits/sec) received on the
+RF port over the period specified by suStatisticsSamplePeriod.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suRfTxAvgThroughputLog' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.21
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Average payload data throughput (in Kbits/sec) transmitted on the
+RF port over the period specified by suStatisticsSamplePeriod.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suSUCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Number of subscriber units in the subscriber database.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suSUtoSU' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+It is peer-to-peer group this SU belongs to.
+With the SU to SU switch is turned on, SUs in
+the same peer-to-peer group can communicate to
+each other via the AP. There are totally 15 groups
+available. Note that the SU shall be set to priority
+user for this feature to improve latency.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suStatisticsSamplePeriod' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A period (in minute) AP requests update on SU Info Table from all associated SUs.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='suTCPIPForLocalEth' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.27
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+When it is turned on, then the SU will process all the local TCP/IP service.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='suTemperature' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.25
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber Unit temperature reading value (in Celsius).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='suTxPower' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.6.1.17
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber unit Tx Power Level (in dBm).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='sudb' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.5
+</property>
+</object>
+<object id='sudbAdd' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.5.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Add a subscriber (specified in object sudbDeleteOrAddID) to the subscriber database.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='sudbAddCIR' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.5.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+It is the Committed Information Rate (in Kbps) the AP allocates to SU.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='sudbAddMAC' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.5.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+It is the MAC address of the subscriber unit,
+which can be found on the back of the SU.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='sudbAddMIR' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.5.6
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+It is the Maximum Information Rate (in Kbps) the AP allocates to SU.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='sudbAddPolling' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.5.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+It is service level value, regular or priority, of a SU.
+The AP will poll priority user more often, thus better
+network latency as the result. As the network latency
+varies based on the number of subscriber units the AP
+serves, priority user is guaranteed that the latency is
+NOT greater than 100ms regardless of the size of the network.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='sudbAddSUtoSU' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.5.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+It is peer-to-peer group this SU belongs to.
+With the SU to SU switch is turned on, SUs in
+the same peer-to-peer group can communicate to
+each other via the AP. There are totally 15 groups
+available. Note that the SU shall be set to priority
+user for this feature to improve latency.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='sudbDelete' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.5.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Delete a subscriber (specified in object sudbDeleteOrAddID) from the subscriber database.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='sudbDeleteOrAddID' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.3.5.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Subscriber unit ID (1..8190). Each
+subscriber in a sector shall have a unique ID.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='trapconfig' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.4
+</property>
+</object>
+<object id='trapconfigDest1IPAddress' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.4.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trap destination 1 IP address.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='trapconfigDest2IPAddress' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.4.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Trap destination 2 IP address.
+</property>
+<property type="string" id="access" mode="w" >
+readwrite
+</property>
+</object>
+<object id='trapconfigTrapCount' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.4.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Types of trap.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='trapconfigTrapEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.4.4.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Information about a specific Trango trap event.
+</property>
+</object>
+<object id='trapconfigTrapTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.4.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A table that contains information of Trango trap events .
+</property>
+</object>
+</tomanycont>
+<tomanycont id='notifications'>
+<object id='apOpModeFailure' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.16.0.9
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The SNMP trap that is generated when a specific AP
+not being in ap mode during boot up sequence.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'apsystemBaseId': {'nodetype': 'object', 'module': 'TRANGOM5830S-MIB'}}
+</property>
+</object>
+<object id='suLinkDown' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.16.0.8
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The SNMP trap that is generated when a specific SU Powered Off.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'suID': {'nodetype': 'object', 'module': 'TRANGOM5830S-MIB'}}
+</property>
+</object>
+<object id='suLinkUp' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+TRANGOM5830S-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.5454.1.20.16.0.7
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The SNMP trap that is generated when a specific SU Associated.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'suID': {'nodetype': 'object', 'module': 'TRANGOM5830S-MIB'}}
 </property>
 </object>
 </tomanycont>

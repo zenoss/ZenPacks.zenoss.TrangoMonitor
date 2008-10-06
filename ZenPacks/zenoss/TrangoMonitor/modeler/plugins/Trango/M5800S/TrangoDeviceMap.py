@@ -13,8 +13,6 @@ class TrangoDeviceMap(SnmpPlugin):
     maptype = "TrangoDeviceMap"
     
     snmpGetMap = GetMap({
-        '.1.3.6.1.2.1.1.2.0': 'setHWProductKey',
-        
         '.1.3.6.1.4.1.5454.1.10.1.1.1.0': 'sysHW',
         '.1.3.6.1.4.1.5454.1.10.1.1.2.0': 'sysFW',
         '.1.3.6.1.4.1.5454.1.10.1.1.3.0': 'sysFPGA',

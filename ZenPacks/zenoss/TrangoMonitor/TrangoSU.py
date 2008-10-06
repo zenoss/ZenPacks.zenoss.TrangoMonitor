@@ -105,7 +105,10 @@ class TrangoSU(DeviceComponent, ManagedEntity):
 
 
     def viewName(self): return "SU" + self.id
-    name = primarySortKey = viewName
+    name = viewName
+    
+    def primarySortKey(self):
+        return int(self.id)
 
 
     def device(self):

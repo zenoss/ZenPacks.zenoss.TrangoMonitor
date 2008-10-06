@@ -41,7 +41,8 @@
     </tr><tr>
         <td class="tableheader" align="left">Radio Mode</td>
         <td class="tablevalues" colspan="3" tal:content="
-            python: here.sysDefOpMode + ' / ' + here.sysCurOpModeString()"/>
+            python: here.sysDefOpMode or 'Unknown' + ' / ' + 
+                here.sysCurOpModeString()"/>
     </tr><tr>
         <td class="tableheader" align="left">Broadcast &amp; Multicast</td>
         <td class="tablevalues" tal:content="here/sysBlockBroadcastMulticast"/>
@@ -55,7 +56,7 @@
     </tr><tr>
         <td class="tableheader" align="left">TFTPD / HTTPD</td>
         <td class="tablevalues" tal:content="
-            python: here.sysTFTPD + ' / ' + here.sysHTTPD"/>
+            python: str(here.sysTFTPD) or str(here.sysTFTPD)"/>
         <td class="tableheader" align="left">UNII Service Radius</td>
         <td class="tablevalues" tal:content="here/uniiServiceRadius"/>
     </tr><tr>
