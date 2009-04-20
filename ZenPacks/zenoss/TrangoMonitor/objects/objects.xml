@@ -28,6 +28,9 @@ No collection for Trango ethernet interfaces
 </object>
 </tomanycont>
 <object id='M5800S' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property type="lines" id="devtypes" mode="w" >
+[('Trango M5800S', 'SNMP')]
+</property>
 <property visible="True" type="lines" id="zDeviceTemplates" >
 ['Device', 'TrangoM5800S']
 </property>
@@ -1315,6 +1318,9 @@ AVERAGE
 </tomanycont>
 </object>
 <object id='M5830S' module='Products.ZenModel.DeviceClass' class='DeviceClass'>
+<property type="lines" id="devtypes" mode="w" >
+[('Trango M5830S', 'SNMP')]
+</property>
 <property visible="True" type="lines" id="zCollectorPlugins" >
 ['zenoss.snmp.DeviceMap', 'zenoss.snmp.NewDeviceMap', 'Trango.M5830S.TrangoDeviceMap', 'Trango.M5830S.TrangoInterfaceMap', 'Trango.M5830S.TrangoRouteMap', 'Trango.M5830S.TrangoSUMap']
 </property>
