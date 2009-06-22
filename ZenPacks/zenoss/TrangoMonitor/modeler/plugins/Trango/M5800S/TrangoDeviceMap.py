@@ -5,6 +5,7 @@
 ######################################################################
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 
 class TrangoDeviceMap(SnmpPlugin):
     """Maps device level information from Trango access points
@@ -80,7 +81,7 @@ class TrangoDeviceMap(SnmpPlugin):
         getdata, tabledata = results
         if getdata['sysHW'] is None: return None
         om = self.objectMap(getdata)
-        om.setOSProductKey = om.sysFW
+        om.setOSProductKey = MultiArgs(om.sysFW, "Trango Systems")
         om.sysHW = self.asmac(om.sysHW)
         om.sysFPGA = self.asmac(om.sysFPGA)
         om.sysChecksum = self.asmac(om.sysChecksum)
