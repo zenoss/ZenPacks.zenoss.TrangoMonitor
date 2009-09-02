@@ -1,8 +1,12 @@
-######################################################################
+#####################################################################
 #
 # Copyright 2008 Zenoss, Inc.  All Rights Reserved.
 #
 ######################################################################
+
+__doc__ = """TrangoRouteMap
+Gather Trango routing information.
+"""
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetMap
 

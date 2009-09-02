@@ -4,6 +4,10 @@
 #
 ######################################################################
 
+__doc__ = """TrangoInterfaceMap
+Gather information about Trango network interfaces.
+"""
+
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetMap
 
 class TrangoInterfaceMap(SnmpPlugin):

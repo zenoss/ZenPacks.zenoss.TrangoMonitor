@@ -4,6 +4,10 @@
 #
 ######################################################################
 
+__doc__ = """TrangoSUMap
+Gather SU information from Trango M583OS devices.
+"""
+
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, \
     GetTableMap
 

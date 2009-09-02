@@ -4,6 +4,10 @@
 #
 ######################################################################
 
+__doc__ = """TrangoRouteMap
+Gather routing information from Trango M583OS devices.
+"""
+
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetMap
 
 class TrangoRouteMap(SnmpPlugin):

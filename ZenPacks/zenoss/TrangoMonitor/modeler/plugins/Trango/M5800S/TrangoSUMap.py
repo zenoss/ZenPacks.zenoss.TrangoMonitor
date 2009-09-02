@@ -4,6 +4,10 @@
 #
 ######################################################################
 
+__doc__ = """TrangoSUMap
+Gather Trango SU information.
+"""
+
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, \
     GetTableMap
 
